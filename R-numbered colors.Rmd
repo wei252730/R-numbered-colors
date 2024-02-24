@@ -1,0 +1,41 @@
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(magrittr)
+```
+
+## R numbered colors
+
+Here are the codes
+
+```{r cars, echo=TRUE, fig.dim = c(11, 8)}
+
+
+tt <- tibble(x = rep(1:30 , 22),
+             y = rep(1:22, each = 30),
+             n = 1:length(x)) %>%
+    mutate(cc = colors()[n]) %>%
+    mutate(text_color = map_chr(cc, function(x){
+        aa <- col2rgb(x) %>% as.numeric() %>% sum()
+        aa1 <- col2rgb(x)[2]
+        bb <- ifelse(aa > 255 | aa1 == 255, "black", "white")
+        bb
+    }))
+
+pp <- ggplot(tt, aes(x=x, y=y, fill = cc)) + 
+    geom_tile(color = "grey55") + 
+    geom_text(aes(label = n, color = text_color, x = x, y = y), 
+              inherit.aes = F) + 
+    scale_fill_identity() + 
+    scale_color_identity() + 
+    scale_y_reverse()
+
+pp %+% filter(pp$data, !is.na(cc)) + 
+    theme_void()
+```
+
+
