@@ -10,7 +10,7 @@ library(magrittr)
 
 ## R numbered colors
 
-Here are the codes
+Here are the codes generating the chart
 
 ```{r cars, echo=TRUE, fig.dim = c(11, 8)}
 
